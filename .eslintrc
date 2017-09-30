@@ -1,0 +1,87 @@
+{
+  "plugins": [
+    "prettier"
+  ],
+  "extends": [
+    "strict",
+    "prettier"
+  ],
+  "rules": {
+    "prettier/prettier": ["error", {"singleQuote": true, "trailingComma": true, "parser": "flow"}],
+    
+    // Blacklist certain identifiers to prevent them being used
+    "id-blacklist": ["off"],
+
+    // this option enforces minimum and maximum identifier lengths
+    // (variable names, property names etc.)
+    "id-length": ["off"],
+
+    // require identifiers to match the provided regular expression
+    "id-match": ["off"],
+
+    // allow/disallow an empty newline after var statement
+    "newline-after-var": [
+        2,
+        "always",
+    ],
+    // allow/disallow dangling underscores in identifiers
+    "no-underscore-dangle": ["off"],
+
+    // disallow the use of magic numbers
+    "no-magic-numbers": ["off"],
+
+    // disallow declaration of variables already declared in the outer scope (but allow err and res)
+    "no-shadow": ["error", {"allow": ["err", "res"]}],
+
+    // require parens in arrow function arguments only when needed
+    "arrow-parens": ["error", "as-needed"],
+
+    // Enforces Stroustrup style brace formatting
+    "brace-style": ["error", "stroustrup"],
+
+    // Warn if there is a missing trailing comma on arrays or objects that span multiple lines
+    "comma-dangle": ["error", "always-multiline"],
+
+    // Never require a space before function opening parenthesis
+    "space-before-function-paren": ["error", "never"],
+
+	// Enforce spaces inside brackets
+
+    // Do not enforce camel case property names.
+    "camelcase": ["error", {"properties": "never"}],
+
+    // Disable use strict rule.
+    "strict": ["off"],
+
+    // Disable max-statements rule.
+    "max-statements": ["off"],
+
+    // enforce newline after each call when chaining the calls
+    "newline-per-chained-call": ["off"],
+
+    // Allow fixme, todo etc.
+    "no-warning-comments": ["off"],
+
+    // TEMP: Increase the allowed maximum number of function paramaters for the time being.
+    "max-params": ["warn", 7],
+
+    // TEMP: Disable the chek of usage of this outside classes.
+    "no-invalid-this": ["off"],
+
+    // Don"t prefer Reflect.
+    "prefer-reflect": ["off"],
+
+    // enforce spacing around embedded expressions of template strings
+    "template-curly-spacing": ["error", "always"],
+
+    // allow confusing arrow function returns when wrapped in parens.
+    "no-confusing-arrow": ["error", { "allowParens": true } ],
+
+    // Allow inline comments.
+    "no-inline-comments": ["off"],
+
+    // Allow padding at the top and bottom of blocks.
+    "padded-blocks": ["off"],
+
+  }
+}
