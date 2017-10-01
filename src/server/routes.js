@@ -1,13 +1,17 @@
 'use strict';
 
 const router = require('express').Router();
-const Snail = require('./snail.js');
+const asyncMiddleware = require('./async.middleware');
+const Snail = require('./snail');
 
 module.exports = router;
 
-router.post('/snail', (req, res) => {
-  const snail = new Snail();
-  const result = snail.logSnailResult(req);
+router.post(
+  '/snail',
+  asyncMiddleware(async (req, res) => {
+    const snail = new Snail();
+    const result = await snail.logSnailResult(req);
 
-  res.json(result);
-});
+    res.json(result);
+  })
+);

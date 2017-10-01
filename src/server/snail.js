@@ -1,5 +1,7 @@
 'use strict';
 
+const SnailLog = require('./models/snail.model');
+
 /**
  * Class that calculates and logs the result for the snail problem
  */
@@ -14,23 +16,36 @@ module.exports = class Snail {
    * This method delegates the validation, calculation and storing of the snail log
    * to other methods in this class and returns the result
    */
-  logSnailResult(req) {
+  async logSnailResult(req) {
     // const validated = this.validate(req.body);
 
     // if (!validated.valid) {
     // res.error(400).send(validated.error);
     // }
     //
+    //
+    const snailLog = {
+      h: Number.parseFloat(req.body.h, 10),
+      u: Number.parseFloat(req.body.u, 10),
+      d: Number.parseFloat(req.body.d, 10),
+      f: Number.parseFloat(req.body.f, 10)
+    };
 
     const result = this.calculateResult(
-      req.body.h,
-      req.body.u,
-      req.body.d,
-      req.body.f,
+      snailLog.h,
+      snailLog.u,
+      snailLog.d,
+      snailLog.f,
       this.total
     );
 
-    // await logToDb(result);
+    snailLog.result = result;
+
+    try {
+      await this.logToDb(snailLog);
+    } catch (err) {
+      return `Mongo error: ${err}`;
+    }
 
     console.log(`result is ${result}`);
     return result;
@@ -102,5 +117,12 @@ module.exports = class Snail {
 
     console.log(`up after fatigue applied ${fatigueApplied}`);
     return fatigueApplied;
+  }
+
+  logToDb(snailLog) {
+    console.log(snailLog);
+    const log = new SnailLog(snailLog);
+
+    return log.save();
   }
 };
