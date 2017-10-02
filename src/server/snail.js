@@ -37,8 +37,7 @@ module.exports = class Snail {
       snailLog.h,
       snailLog.u,
       snailLog.d,
-      snailLog.f,
-      this.total
+      snailLog.f
     );
 
     snailLog.result = result.message;
@@ -90,37 +89,43 @@ module.exports = class Snail {
    * Calculate the result
    *
    */
-  calculateResult(height, up, down, fatigue, total) {
-    while (total <= height) {
+  calculateResult(height, up, down, fatigue) {
+    while (this.total <= height) {
       const fatigueApplied = this.applyFatigue(this.day, up, fatigue);
 
-      total += fatigueApplied;
+      this.total += fatigueApplied;
 
-      if (total > height) {
+      if (this.total > height) {
         return Object.create({
           day: this.day,
           message: `success on day ${this.day}`
         });
       }
 
-      total -= down;
+      this.total -= down;
 
-      if (total < 0) {
+      if (this.total < 0) {
         return Object.create({
           day: this.day,
           message: `failure on day ${this.day}`
         });
       }
 
-      console.log(`total at day ${this.day} is ${total}`);
+      console.log(`total at day ${this.day} is ${this.total}`);
 
       this.day++;
 
-      return this.calculateResult(height, fatigueApplied, down, fatigue, total);
+      return this.calculateResult(
+        height,
+        fatigueApplied,
+        down,
+        fatigue,
+        this.total
+      );
     }
 
     return Object.create({
-      day: this.day,
+      day: Number.parseInt(this.day, 10),
       message: `success on day ${this.day}`
     });
   }
