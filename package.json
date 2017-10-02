@@ -6,7 +6,7 @@
   "main": "index.js",
   "scripts": {
     "precommit": "lint-staged",
-    "start": "",
+    "start": "node ./src/server/index.js",
     "test":
       "./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha -- -R spec --ui bdd -r should",
     "check-coverage": "./node_modules/.bin/istanbul check-coverage",
