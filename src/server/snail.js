@@ -1,5 +1,6 @@
 'use strict';
 
+const _ = require('lodash');
 const SnailLog = require('./models/snail.model');
 
 /**
@@ -17,13 +18,14 @@ module.exports = class Snail {
    * to other methods in this class and returns the result
    */
   async logSnailResult(req) {
-    // const validated = this.validate(req.body);
+    const validated = this.validated(req.body);
 
-    // if (!validated.valid) {
-    // res.error(400).send(validated.error);
-    // }
-    //
-    //
+    if (!validated.valid) {
+      throw new Error(
+        `Invalid request parameters: ${JSON.stringify(validated.errors)}`
+      );
+    }
+
     const snailLog = {
       h: Number.parseFloat(req.body.h, 10),
       u: Number.parseFloat(req.body.u, 10),
@@ -64,7 +66,24 @@ module.exports = class Snail {
    *
    * Numbers should be in the range 1 - 100.
    */
-  validated(requestBody) {}
+  validated(requestBody) {
+    const validProps = ['h', 'u', 'd', 'f'];
+    const validated = Object.create(null);
+
+    const validationErrors = _.filter(requestBody, (value, key) => {
+      return validProps.includes(key) === false;
+    });
+
+    if (validationErrors.length) {
+      validated.valid = false;
+      validated.errors = validationErrors;
+
+      return validated;
+    }
+
+    validated.valid = true;
+    return validated;
+  }
 
   /**
    * Calculate the result
