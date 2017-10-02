@@ -1,5 +1,6 @@
 'use strict';
 
+const logger = require('./utils/logger');
 const _ = require('lodash');
 const SnailLog = require('./models/snail.model');
 
@@ -50,7 +51,7 @@ module.exports = class Snail {
       return `Mongo error: ${err}`;
     }
 
-    console.log(`result is ${result.message}`);
+    logger.debug(`result is ${result.message}`);
     return result.message;
   }
 
@@ -114,7 +115,7 @@ module.exports = class Snail {
         });
       }
 
-      console.log(`total at day ${this.day} is ${this.total}`);
+      logger.debug(`total at day ${this.day} is ${this.total}`);
 
       this.day++;
 
@@ -153,13 +154,14 @@ module.exports = class Snail {
 
     const fatigueApplied = up - fatigueEffect;
 
-    console.log(`up after fatigue applied ${fatigueApplied}`);
+    logger.debug(`up after fatigue applied ${fatigueApplied}`);
     return fatigueApplied;
   }
 
   logToDb(snailLog) {
-    console.log(snailLog);
     const log = new SnailLog(snailLog);
+
+    logger.debug(`will store log to db: ${JSON.stringify(snailLog, null, 2)}`);
 
     return log.save();
   }

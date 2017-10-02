@@ -72,7 +72,7 @@
     "prefer-reflect": ["off"],
 
     // enforce spacing around embedded expressions of template strings
-    "template-curly-spacing": ["error", "always"],
+    "template-curly-spacing": ["error", "never"],
 
     // allow confusing arrow function returns when wrapped in parens.
     "no-confusing-arrow": ["error", { "allowParens": true } ],
