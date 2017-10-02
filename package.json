@@ -8,9 +8,9 @@
     "precommit": "lint-staged",
     "start": "",
     "test":
-      "./node_modules/.bin/istanbul cover ./ node_modules/.bin/_mocha -- -R spec --ui bdd -r should",
+      "./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha -- -R spec --ui bdd -r should",
     "check-coverage": "./node_modules/.bin/istanbul check-coverage",
-    "lint": "./node_modules/.bin/eslint ./**",
+    "lint": "./node_modules/.bin/eslint ./src/**/*.js",
     "prettify":
       "./node_modules/.bin/prettier --write --single-quote --parser flow ./src/**/*.js"
   },
@@ -30,6 +30,7 @@
     "oauth2-server": "3.0.0"
   },
   "devDependencies": {
+    "chai": "^4.1.2",
     "eslint": "4.8.0",
     "eslint-config-prettier": "2.6.0",
     "eslint-config-strict": "14.0.0",
