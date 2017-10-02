@@ -11,6 +11,7 @@ const snailLogSchema = new Schema(
     u: { type: Number, required: true },
     d: { type: Number, required: true },
     f: { type: Number, required: true },
+    success: { type: Boolean, required: true },
     result: { type: String, required: true }
   },
   {

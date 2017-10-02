@@ -19,6 +19,12 @@ app.use(bodyParser.json());
 
 app.use('/api', require('./routes'));
 
+// serve client code
+app.use(express.static('./src/client/'));
+app.use(express.static('./'));
+// Any deep link calls should return index.html
+app.use('/*', express.static('./src/client/index.html'));
+
 app.start = () => {
   const server = app.listen(3000, () => {
     const baseUrl =

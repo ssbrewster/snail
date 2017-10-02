@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Snail problem</title>
+    <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8">
+  </head>
+  <body>
+    <div class="wrap">
+      <div class="menu">
+        <a class="menu-results">Results</a>
+        <a class="menu-past">Past results</a>
+        <a class="menu-report">Report</a>
+      </div>
+      <div class="results">
+        <h3>Create a new Snail log</h3>
+        <form id="snail-form" action="" method="post">
+          <input type="text" name="h" id="height" value="" />
+          <label for="height">Height</label>
+          <input type="text" name="u" id="up" value="" />
+          <label for="up">Up</label>
+          <input type="text" name="d" id="down" value="" />
+          <label for="down">Down</label>
+          <input type="text" name="f" id="fatigue" value="" />
+          <label for="fatigue">Fatigue</label>
+          <button type="submit">Get result</button>
+        </form>
+        <div class="result">
+          <h3>Result</h3>
+          <p></p>
+        </div>
+      </div>
+      <div class="past-results">
+        <pre></pre>
+      </div>
+      <div class="report">
+        <pre></pre>
+      </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"
+            integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+            crossorigin="anonymous">
+    </script>
+    <script type="text/javascript" charset="utf-8" src="js/snail.js"></script>
+  </body>
+</html>

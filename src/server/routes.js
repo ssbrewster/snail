@@ -15,3 +15,23 @@ router.post(
     res.json(result);
   })
 );
+
+router.get(
+  '/snail/results',
+  asyncMiddleware(async (req, res) => {
+    const snail = new Snail();
+    const pastResults = await snail.getPastResults();
+
+    res.json(pastResults);
+  })
+);
+
+router.get(
+  '/snail/report',
+  asyncMiddleware(async (req, res) => {
+    const snail = new Snail();
+    const report = await snail.generateReport();
+
+    res.json(report);
+  })
+);

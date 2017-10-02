@@ -41,6 +41,7 @@ module.exports = class Snail {
     );
 
     snailLog.result = result.message;
+    snailLog.success = result.success;
     snailLog.day = result.day;
 
     try {
@@ -98,7 +99,8 @@ module.exports = class Snail {
       if (this.total > height) {
         return Object.create({
           day: this.day,
-          message: `success on day ${this.day}`
+          message: `success on day ${this.day}`,
+          success: true
         });
       }
 
@@ -107,7 +109,8 @@ module.exports = class Snail {
       if (this.total < 0) {
         return Object.create({
           day: this.day,
-          message: `failure on day ${this.day}`
+          message: `failure on day ${this.day}`,
+          success: false
         });
       }
 
@@ -126,7 +129,8 @@ module.exports = class Snail {
 
     return Object.create({
       day: Number.parseInt(this.day, 10),
-      message: `success on day ${this.day}`
+      message: `success on day ${this.day}`,
+      success: true
     });
   }
 
@@ -158,5 +162,43 @@ module.exports = class Snail {
     const log = new SnailLog(snailLog);
 
     return log.save();
+  }
+
+  getPastResults() {
+    return SnailLog.find({});
+  }
+
+  async generateReport() {
+    let report;
+
+    try {
+      report = await SnailLog.aggregate([
+        {
+          $match: {}
+        },
+        {
+          $group: {
+            _id: null,
+            totalSuccesses: {
+              $sum: { $cond: [{ $eq: ['$success', true] }, '$success', 0] }
+            },
+            totalFailures: {
+              $sum: { $cond: [{ $eq: ['$success', false] }, '$success', 0] }
+            },
+            avgTotalClimbed: { $avg: '$h' },
+            avgSuccessTime: {
+              $avg: { $cond: [{ $eq: ['$success', true] }, '$day', 0] }
+            },
+            avgFailureTime: {
+              $avg: { $cond: [{ $eq: ['$success', false] }, '$day', 0] }
+            }
+          }
+        }
+      ]);
+    } catch (err) {
+      throw new Error(`Mongo error: JSON.stringify(err, null, 4)`);
+    }
+
+    return report;
   }
 };
