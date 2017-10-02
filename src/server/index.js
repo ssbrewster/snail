@@ -1,8 +1,11 @@
-const express = require('express');
 const bodyParser = require('body-parser');
-const mongoose = require('mongoose');
+const express = require('express');
 const logger = require('./utils/logger.js');
+const mongoose = require('mongoose');
 const morgan = require('morgan');
+const OAuthServer = require('express-oauth-server');
+const authModel = require('./auth/model');
+
 const mongoUrl = 'mongodb://localhost/snail';
 
 mongoose.connect(mongoUrl, err => {
@@ -15,10 +18,40 @@ mongoose.connect(mongoUrl, err => {
 
 const app = express();
 
+app.oauth = new OAuthServer({
+  model: authModel,
+  grants: ['password'],
+  debug: true
+});
+
+// Load sample user data
+const OAuthUsersModel = mongoose.model('OAuthUsers');
+const user = {
+  email: 'test@user.com',
+  firstname: 'Test',
+  lastname: 'User',
+  password: 'Password123',
+  username: 'test'
+};
+OAuthUsersModel.findOne(user)
+  .then(existingUser => {
+    if (!existingUser) {
+      const newUser = new OAuthUsersModel(user);
+
+      return newUser.save();
+    }
+  })
+  .then(newUser => {
+    if (newUser) {
+      logger.debug(`Saved sample data ${JSON.stringify(newUser, null, 2)}`);
+    }
+  });
+
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-app.use('/api', require('./routes'));
+app.use('/api', require('./routes')(app));
+
 app.use(morgan('common', { stream: logger.stream }));
 
 // serve client code

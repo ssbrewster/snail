@@ -182,10 +182,10 @@ module.exports = class Snail {
           $group: {
             _id: null,
             totalSuccesses: {
-              $sum: { $cond: [{ $eq: ['$success', true] }, '$success', 0] }
+              $sum: { $cond: [{ $eq: ['$success', true] }, 1, 0] }
             },
             totalFailures: {
-              $sum: { $cond: [{ $eq: ['$success', false] }, '$success', 0] }
+              $sum: { $cond: [{ $eq: ['$success', false] }, 1, 0] }
             },
             avgTotalClimbed: { $avg: '$h' },
             avgSuccessTime: {

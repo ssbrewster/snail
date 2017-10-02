@@ -8,35 +8,15 @@
   </head>
   <body>
     <div class="wrap">
-      <div class="menu">
-        <a class="menu-results">Results</a>
-        <a class="menu-past">Past results</a>
-        <a class="menu-report">Report</a>
-      </div>
-      <div class="results">
-        <h3>Create a new Snail log</h3>
-        <form id="snail-form" action="" method="post">
-          <input type="text" name="h" id="height" value="" />
-          <label for="height">Height</label>
-          <input type="text" name="u" id="up" value="" />
-          <label for="up">Up</label>
-          <input type="text" name="d" id="down" value="" />
-          <label for="down">Down</label>
-          <input type="text" name="f" id="fatigue" value="" />
-          <label for="fatigue">Fatigue</label>
-          <button type="submit">Get result</button>
+      <div class="login">
+        <h3>Enter your login details</h3>
+        <form id="login-form" action="" method="post">
+          <input type="text" name="username" id="username" value="" />
+          <label for="username">Username</label>
+          <input type="text" name="password" id="password" value="" />
+          <label for="username">Password</label>
+          <button type="submit">Login</button>
         </form>
-        <div class="result">
-          <h3>Result</h3>
-          <p></p>
-        </div>
-      </div>
-      <div class="past-results">
-        <pre></pre>
-      </div>
-      <div class="report">
-        <pre></pre>
-      </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"
             integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
