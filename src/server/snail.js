@@ -41,7 +41,8 @@ module.exports = class Snail {
       this.total
     );
 
-    snailLog.result = result;
+    snailLog.result = result.message;
+    snailLog.day = result.day;
 
     try {
       await this.logToDb(snailLog);
@@ -49,8 +50,8 @@ module.exports = class Snail {
       return `Mongo error: ${err}`;
     }
 
-    console.log(`result is ${result}`);
-    return result;
+    console.log(`result is ${result.message}`);
+    return result.message;
   }
 
   /**
@@ -96,13 +97,19 @@ module.exports = class Snail {
       total += fatigueApplied;
 
       if (total > height) {
-        return `success on day ${this.day}`;
+        return Object.create({
+          day: this.day,
+          message: `success on day ${this.day}`
+        });
       }
 
       total -= down;
 
       if (total < 0) {
-        return `failure on day ${this.day}`;
+        return Object.create({
+          day: this.day,
+          message: `failure on day ${this.day}`
+        });
       }
 
       console.log(`total at day ${this.day} is ${total}`);
@@ -112,7 +119,10 @@ module.exports = class Snail {
       return this.calculateResult(height, fatigueApplied, down, fatigue, total);
     }
 
-    return this.day;
+    return Object.create({
+      day: this.day,
+      message: `success on day ${this.day}`
+    });
   }
 
   /**

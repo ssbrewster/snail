@@ -6,6 +6,7 @@ const { Schema } = require('mongoose');
 const snailLogSchema = new Schema(
   {
     id: Schema.ObjectId,
+    day: { type: Number, required: true },
     h: { type: Number, required: true },
     u: { type: Number, required: true },
     d: { type: Number, required: true },
